@@ -4,7 +4,7 @@ import scala.io.Source
   val input = Source.fromFile(inputPath)
 
   println(input.getLines().map(line => {
-    val digits = line.filter(c => c.isDigit)
+    val digits = line.filter(_.isDigit)
     Seq(digits.head, digits.last).mkString.toInt
   }).sum[Int].toString)
 }
