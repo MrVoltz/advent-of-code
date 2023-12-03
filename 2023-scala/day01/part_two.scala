@@ -4,17 +4,8 @@ import scala.io.Source
 @main def partTwo(inputPath: String): Unit = {
   val input = Source.fromFile(inputPath)
 
-  val dict = List(
-    "one" -> '1',
-    "two" -> '2',
-    "three" -> '3',
-    "four" -> '4',
-    "five" -> '5',
-    "six" -> '6',
-    "seven" -> '7',
-    "eight" -> '8',
-    "nine" -> '9',
-  )
+  val dict = List("one", "two", "three", "four", "five", "six", "seven", "eight", "nine")
+    .zip('1' to '9')
 
   println(input.getLines().map(line => {
     @tailrec

@@ -17,7 +17,7 @@ import scala.io.Source
   }
 
   println(input.getLines().flatMap(parseGame).collect({
-    case Game(id, turns) =>
+    case Game(_, turns) =>
       turns.flatten.foldLeft(Map.empty[String, Int])({ case (res, (color, num)) =>
         res.updated(color, res.getOrElse(color, 0).max(num))
       }).values.product
