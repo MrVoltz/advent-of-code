@@ -1,7 +1,9 @@
+package day07
+
 import scala.io.Source
 import scala.math.Ordering.Implicits._
 
-@main def day07PartOne(inputPath: String): Unit = {
+@main def partOne(inputPath: String): Unit = {
   val input = Source.fromFile(inputPath)
 
   case class Hand(cards: IndexedSeq[Int], bid: Int) {

@@ -1,7 +1,9 @@
+package day07
+
 import scala.io.Source
 import scala.math.Ordering.Implicits._
 
-@main def day07PartTwo(inputPath: String): Unit = {
+@main def partTwo(inputPath: String): Unit = {
   val input = Source.fromFile(inputPath)
 
   val sortedCards = "AKQT98765432J"

@@ -1,3 +1,5 @@
+package day01
+
 import scala.io.Source
 
 @main def partOne(inputPath: String): Unit = {
