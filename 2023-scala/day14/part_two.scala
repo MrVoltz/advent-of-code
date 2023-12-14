@@ -1,8 +1,7 @@
 package day14
 
-import shared._
+import shared.*
 
-import java.util.Objects
 import scala.annotation.tailrec
 import scala.io.Source
 
