@@ -1,7 +1,7 @@
 package shared
 
 import java.util.Objects
-import scala.annotation.tailrec
+import scala.annotation.{tailrec, targetName}
 
 case class Pos(y: Int, x: Int) {
   def swap: Pos = Pos(x, y)
@@ -23,6 +23,16 @@ case class Pos(y: Int, x: Int) {
   def manhDist(p: Pos): Int = (x - p.x).abs + (y - p.y).abs
 
   def valid(implicit g: Grid): Boolean = g.isValid(this)
+
+  @targetName("add")
+  def +(p: Pos): Pos = Pos(y + p.y, x + p.x)
+
+  @targetName("subtract")
+  def -(p: Pos): Pos = Pos(y - p.y, x - p.x)
+}
+
+object Pos {
+  val zero: Pos = Pos(0, 0)
 }
 
 class Grid(val lines: IndexedSeq[String]) {
