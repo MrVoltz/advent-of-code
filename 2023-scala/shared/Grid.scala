@@ -29,10 +29,40 @@ case class Pos(y: Int, x: Int) {
 
   @targetName("subtract")
   def -(p: Pos): Pos = Pos(y - p.y, x - p.x)
+
+  def dirFrom(p: Pos): Pos = Pos(math.signum(y - p.y), math.signum(x - p.x))
+
+  def dirTo(p: Pos): Pos = Pos(math.signum(p.y - y), math.signum(p.x - x))
 }
 
 object Pos {
   val zero: Pos = Pos(0, 0)
+}
+
+object Dir {
+  val north: Pos = Pos(-1, 0)
+
+  val east: Pos = Pos(0, 1)
+
+  val south: Pos = Pos(1, 0)
+
+  val west: Pos = Pos(0, -1)
+
+  def left(d: Pos): Pos = d match {
+    case Dir.north => west
+    case Dir.east => north
+    case Dir.south => east
+    case Dir.west => south
+    case _ => throw new IllegalArgumentException()
+  }
+
+  def right(d: Pos): Pos = d match {
+    case Dir.north => east
+    case Dir.east => south
+    case Dir.south => west
+    case Dir.west => north
+    case _ => throw new IllegalArgumentException()
+  }
 }
 
 class Grid(val lines: IndexedSeq[String]) {
