@@ -30,6 +30,9 @@ case class Pos(y: Int, x: Int) {
   @targetName("subtract")
   def -(p: Pos): Pos = Pos(y - p.y, x - p.x)
 
+  @targetName("multiply")
+  def *(by: Int): Pos = Pos(y * by, x * by)
+
   def dirFrom(p: Pos): Pos = Pos(math.signum(y - p.y), math.signum(x - p.x))
 
   def dirTo(p: Pos): Pos = Pos(math.signum(p.y - y), math.signum(p.x - x))
@@ -65,15 +68,23 @@ object Dir {
   }
 }
 
-class Grid(val lines: IndexedSeq[String]) {
+trait GridBase[T, R <: GridBase[T, R]] {
+  def isValid(p: Pos): Boolean
+
+  def apply(p: Pos): T
+
+  def apply(y: Int, x: Int): T = apply(Pos(y, x))
+
+  def updated(p: Pos, c: T): R
+}
+
+class Grid(val lines: IndexedSeq[String]) extends GridBase[Char, Grid] {
   val w: Int = lines(0).length
   val h: Int = lines.size
 
-  def isValid(p: Pos): Boolean = p.x >= 0 && p.y >= 0 && p.x < w && p.y < h
+  override def isValid(p: Pos): Boolean = p.x >= 0 && p.y >= 0 && p.x < w && p.y < h
 
-  def apply(p: Pos): Char = if(isValid(p)) lines(p.y).charAt(p.x) else ' '
-
-  def apply(y: Int, x: Int): Char = apply(Pos(y, x))
+  override def apply(p: Pos): Char = if (isValid(p)) lines(p.y).charAt(p.x) else ' '
 
   def map(f: Pos => Char): Grid = Grid(h, w, f)
 
@@ -81,7 +92,7 @@ class Grid(val lines: IndexedSeq[String]) {
 
   def rotateRight: Grid = Grid(w, h, p => lines(h - p.x - 1).charAt(p.y))
 
-  def updated(p: Pos, c: Char): Grid = Grid(lines.updated(p.y, lines(p.y).updated(p.x, c)))
+  override def updated(p: Pos, c: Char): Grid = Grid(lines.updated(p.y, lines(p.y).updated(p.x, c)))
 
   def allPos: IndexedSeq[Pos] = for(y <- 0 until h; x <- 0 until w) yield Pos(y, x)
 
