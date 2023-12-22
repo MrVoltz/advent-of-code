@@ -94,7 +94,7 @@ import scala.io.Source
       val (newLast, newPeriods) = khIn.foldLeft((last, periods))({ case ((last, periods), id) =>
         if (stats.getOrElse(id, 0) > 0)
           (last.get(id), periods.get(id)) match {
-            case (_, Some(period)) => (last, periods) // done
+            case (_, Some(_)) => (last, periods) // done
             case (Some(lastCnt), _) => (last, periods + (id -> (cnt - lastCnt))) // update periods
             case (None, _) => (last + (id -> cnt), periods) // update last
           }
